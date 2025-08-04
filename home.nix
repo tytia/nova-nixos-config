@@ -3,11 +3,18 @@
 
 {
   nova.desktop.browser.enable = lib.mkForce false;
-	home-manager.users.nova = {
+  peripherals.realsense.enable = lib.mkForce false;
+	home-manager.users.nova = {lib, ...}: {
+    # disable auto screen lock
+    dconf.settings."org/gnome/desktop/session".idle-delay = lib.hm.gvariant.mkUint32 0;
     # Taskbar
     dconf.settings."org/gnome/shell".favorite-apps = [
       "google-chrome.desktop"
+      "com.github.th_ch.youtube_music.desktop"
       "code.desktop"
+      "clion.desktop"
+      "slack.desktop"
+      "discord.desktop"
     ];
 
     # Packages
@@ -15,6 +22,12 @@
       nix-output-monitor
       btop
       google-chrome
+      youtube-music
+      slack
+      discord
+      jetbrains.pycharm-professional
+      jetbrains.clion
+      github-desktop
     ];
 
     # Program settings
@@ -32,6 +45,9 @@
         };
         
         extensions = with pkgs.vscode-extensions; [
+          ms-python.python
+          ms-python.vscode-pylance
+          github.copilot-chat
           # Themes
           zhuangtongfa.material-theme # One Dark Pro
         ];
